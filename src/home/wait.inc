@@ -13,6 +13,7 @@ wait_vblank:
 
 
 ;= Waits bc loops
+;= * bc-Count
 wait:
 	nop
 	nop
@@ -21,5 +22,22 @@ wait:
 	ld a,c
 	or b
 	jr nz,wait
+
+	ret
+
+
+;= Waits bc waits
+;= * bc-Count
+long_wait:
+	push bc
+
+	ld bc,$FFFF
+	call wait
+
+	pop bc
+	dec bc
+	ld a,c
+	or b
+	jr nz,long_wait
 
 	ret

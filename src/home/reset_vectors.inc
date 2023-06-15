@@ -30,7 +30,15 @@ RST10:
 	jp hl
 
 
-SECTION "rst28", ROM0[$0028]
-;= 
-RST28:
-	
+SECTION "rst18", ROM0[$0018]
+;= Copy from bank
+RST18:
+	ret
+;	ld a,[rROMB]
+;	push af
+;
+;	ld a,b
+;	ld [rROMB],a
+;
+;
+;	call mem_cpy

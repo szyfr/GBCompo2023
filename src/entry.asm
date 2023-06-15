@@ -2,6 +2,7 @@
 ;= Definitions
 include "src/includes/hardware.inc"
 include "src/constants.inc"
+include "src/macros.inc"
 
 ;= RAM
 include "src/ram/hram.inc"
@@ -49,7 +50,19 @@ Start:
 	call copy_dma
 
 	;* Return stack to normal
-	ld sp,$FFFE
+	ld sp,$FFFD
+	
+	;* Show logo
+	banked_call 1, logo_sequence
+
+	;* Wait for v-blank
+	call wait_vblank
+
+	;* Clear VRAM
+	ld hl,_VRAM
+	ld bc,$2000
+	xor a
+	call mem_set
 
 	
 	;ld hl,template_function
@@ -62,10 +75,12 @@ Start:
 
 
 
-
 ;;= Bank 1
 section "bank0", romx[$4000], bank[1]
 db 1
+include "src/bank1/font.inc"
+include "src/bank1/logos.inc"
+include "src/bank1/logo_sequence.inc"
 
 template_function:
 	ret
