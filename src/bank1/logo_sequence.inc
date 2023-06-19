@@ -78,6 +78,10 @@ logo_sequence:
 	ld bc,4
 	call long_wait
 
+	xor a
+	ldh [rSCX],a
+	ldh [rSCY],a
+
 	ret
 
 pan_right:

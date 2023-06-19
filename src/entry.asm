@@ -53,7 +53,7 @@ Start:
 	ld sp,$FFFD
 	
 	;* Show logo
-	banked_call 1, logo_sequence
+	;banked_call 1, logo_sequence
 
 	;* Wait for v-blank
 	call wait_vblank
@@ -63,6 +63,14 @@ Start:
 	ld bc,$2000
 	xor a
 	call mem_set
+
+	;* Clear OAM
+	ld hl,_OAMRAM
+	ld bc,$00A0
+	xor a
+	call mem_set
+
+	banked_call 1, title_sequence
 
 	
 	;ld hl,template_function
@@ -81,6 +89,8 @@ db 1
 include "src/bank1/font.inc"
 include "src/bank1/logos.inc"
 include "src/bank1/logo_sequence.inc"
+include "src/bank1/intro_tiles.inc"
+include "src/bank1/title_sequence.inc"
 
 template_function:
 	ret
